@@ -2,6 +2,8 @@ import { createProduct } from "@/data/products";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "./ui/button";
 import {
@@ -14,8 +16,6 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { toast } from "sonner";
-import { useSearchParams } from "react-router-dom";
 
 const createProductSchema = z.object({
   name: z.string(),
@@ -39,13 +39,14 @@ export function CreateProductDialog() {
   const { mutateAsync: createProductFn } = useMutation({
     mutationFn: createProduct,
     onSuccess(_, variables) {
+      console.log(_);
       // const cached = queryClient.getQueryData(["products"]);
 
       queryClient.setQueryData(["products", id, name], (data: any) => {
         return [
           ...data,
           {
-            id: variables.id,
+            id: _.data.data.id,
             name: variables.name,
             price: variables.price,
           },

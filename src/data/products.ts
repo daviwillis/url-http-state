@@ -55,11 +55,13 @@ export async function getProducts({ id, name }: GetProductsFilters) {
 
   // return products
 
+  // console.log("data", data);
+
   const response = await axios.get("http://127.0.0.1:3333/api/products/list");
 
   if (id) {
     return response.data.data.filter((product: Product) =>
-      product?.id?.includes(id)
+      product?.id?.trim().includes(id.trim())
     );
   }
 
@@ -78,8 +80,10 @@ export async function createProduct({ name, price }: Product) {
   //delay de 1s
   // await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  return axios.post("http://127.0.0.1:3333/api/products/store", {
-    name: name,
-    price: price,
-  });
+  const response = await axios.post(
+    "http://127.0.0.1:3333/api/products/store",
+    { name, price }
+  );
+
+  return response;
 }

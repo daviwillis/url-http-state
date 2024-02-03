@@ -53,7 +53,7 @@ export function ProductsFilters() {
       onSubmit={handleSubmit(handleFilterProducts)}
       className="flex items-center gap-2"
     >
-      {/* <Input placeholder="ID do pedido" {...register("id")} /> */}
+      <Input placeholder="ID do pedido" {...register("id")} />
       <Input placeholder="Nome do produto" {...register("name")} />
       <Button type="submit" variant="link">
         <Search className="size-4 mr-2" />
